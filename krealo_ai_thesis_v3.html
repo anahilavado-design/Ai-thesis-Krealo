@@ -1,0 +1,746 @@
+<!DOCTYPE html><html lang="es"><head>
+
+
+<meta charset="UTF-8">
+<title>Krealo · Tesis AI · Notas para Adolfo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Inter+Tight:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-faint: #8a8a8a;
+    --paper: #fafaf7;
+    --paper-warm: #f3f0e8;
+    --line: #e0ddd5;
+    --line-soft: #ecebe5;
+    --accent: #c2410c;
+    --accent-soft: #fed7aa;
+    --teal: #0f6e56;
+    --teal-soft: #d1f0e3;
+    --amber: #92400e;
+    --amber-soft: #fde68a;
+    --red: #991b1b;
+    --red-soft: #fecaca;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 60px 56px 80px;
+  }
+
+  /* HEADER */
+  .header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: end;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 48px;
+  }
+  .header-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .header-mark strong { color: var(--ink); font-weight: 500; }
+  .header-title {
+    font-family: 'Fraunces', serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .header-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .header-meta {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* TLDR BOX */
+  .tldr {
+    background: var(--paper-warm);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin-bottom: 56px;
+  }
+  .tldr-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .tldr-text {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .tldr-text strong {
+    font-weight: 500;
+    background: linear-gradient(transparent 60%, var(--accent-soft) 60%);
+    padding: 0 2px;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 64px; }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+  .section p {
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .section p strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* MARKET CONTEXT — opening */
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 28px 0;
+  }
+  .market-cell {
+    background: var(--paper);
+    padding: 22px 20px;
+  }
+  .market-cell-num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .market-cell-num em {
+    font-size: 18px;
+    color: var(--ink-soft);
+    font-style: normal;
+    font-weight: 400;
+    margin-left: 2px;
+  }
+  .market-cell-label {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .market-cell-source {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* SPECTRUM — Frente 1 */
+  .spectrum {
+    margin: 32px 0 24px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .spectrum-axis {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: linear-gradient(to right, var(--red-soft) 0%, var(--amber-soft) 50%, var(--teal-soft) 100%);
+    height: 6px;
+  }
+  .spectrum-cells {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .spectrum-cell {
+    padding: 22px 20px;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+  .spectrum-cell:last-child { border-right: none; }
+  .spectrum-cell-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .tag-resistance { background: var(--red-soft); color: var(--red); }
+  .tag-enabled { background: var(--amber-soft); color: var(--amber); }
+  .tag-native { background: var(--teal-soft); color: var(--teal); }
+  .spectrum-cell-name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .spectrum-cell-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* CALLOUT QUOTE */
+  .callout {
+    margin: 28px 0;
+    padding: 20px 24px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .callout-source {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11.5px;
+    font-style: normal;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* RISK MATRIX */
+  .risk-list {
+    margin: 24px 0;
+  }
+  .risk-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: start;
+  }
+  .risk-row:last-child { border-bottom: none; }
+  .risk-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 3px;
+  }
+  .risk-content {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .risk-content strong { font-weight: 500; }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin: 28px 0;
+  }
+  .col-card {
+    padding: 24px 24px;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+  }
+  .col-card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .col-card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .col-card p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* SUPERCOMPANY VISUAL */
+  .supercompany {
+    margin: 32px 0;
+    padding: 32px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .supercompany-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .supercompany-side h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper-warm);
+    opacity: 0.6;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .supercompany-side h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: var(--paper);
+  }
+  .supercompany-side p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--paper-warm);
+    opacity: 0.85;
+  }
+  .supercompany-side.future h3 em {
+    font-style: italic;
+    color: var(--accent-soft);
+  }
+  .supercompany-divider {
+    position: absolute;
+    top: 32px;
+    bottom: 32px;
+    left: 50%;
+    width: 1px;
+    background: rgba(250,250,247,0.15);
+  }
+
+  /* DIMENSIONS TABLE */
+  .dim-table {
+    margin: 24px 0;
+    border: 1px solid var(--line);
+  }
+  .dim-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+  .dim-row:last-child { border-bottom: none; }
+  .dim-row.header {
+    background: var(--paper-warm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .dim-cell {
+    padding: 14px 18px;
+    border-right: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .dim-cell:last-child { border-right: none; }
+  .dim-cell.label {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .dim-cell.before { color: var(--ink-soft); }
+  .dim-cell.after { color: var(--ink); background: rgba(254, 215, 170, 0.18); }
+
+  /* CLOSE — three asks */
+  .asks {
+    margin: 28px 0;
+    counter-reset: ask;
+  }
+  .ask {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 20px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .ask:last-child { border-bottom: 1px solid var(--line); }
+  .ask::before {
+    counter-increment: ask;
+    content: counter(ask, decimal-leading-zero);
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .ask-content h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .ask-content p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .page { padding: 24px 32px; max-width: none; }
+    .section { page-break-inside: avoid; }
+    .supercompany { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 32px 24px; }
+    .header { grid-template-columns: 1fr; gap: 12px; }
+    .header-title { font-size: 32px; }
+    .market-grid { grid-template-columns: 1fr; }
+    .spectrum-cells { grid-template-columns: 1fr; }
+    .spectrum-cell { border-right: none; border-bottom: 1px solid var(--line); }
+    .two-col { grid-template-columns: 1fr; }
+    .supercompany-grid { grid-template-columns: 1fr; }
+    .supercompany-divider { display: none; }
+    .dim-row { grid-template-columns: 1fr; }
+    .risk-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body data-new-gr-c-s-check-loaded="14.1284.0" data-gr-ext-installed="" data-cc-id="cc-1" style="cursor: crosshair;" data-new-gr-c-s-loaded="14.1284.0">
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-mark">
+      <strong>Para</strong> Adolfo Vinatea<br>
+      <strong>De</strong> Anahí Lavado<br>
+      <strong>Fecha</strong> 22 de abril, 2026<br>
+      <strong>Lectura</strong> 7 min
+    </div>
+    <div>
+      <h1 class="header-title">El mercado ya está<br><em>repricing</em> AI adoption.</h1>
+      <div class="header-meta">Notas desde People &amp; Org — no como función de soporte, sino como habilitador de organización para Krealo, el portafolio y nuevas inversiones · borrador para conversa</div>
+    </div>
+  </div>
+
+  <!-- LENTE -->
+  <div style="margin-bottom: 28px; padding: 18px 24px; border: 1px solid var(--line); font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;">
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); display: block; margin-bottom: 8px;">▸ Desde dónde está escrito esto</span>
+    Estas notas no vienen de People como función de soporte al fondo. Vienen de People como el único rol en Krealo con visibilidad simultánea sobre la organización interna, el estado organizacional de las startups, y las señales de mercado sobre qué tipo de empresa gana en 2028. Ese es el lente — y es desde ahí que los tres frentes que siguen tienen coherencia.
+  </div>
+
+  <!-- TLDR -->
+  <div class="tldr">
+    <div class="tldr-label">▸ TL;DR</div>
+    <div class="tldr-text">
+      Lo que hoy es una <strong>brecha organizacional</strong> en el portafolio Fondo 2, en 2027–2028 se traduce en <strong>descuento de múltiplo</strong> al cierre de fondo. Krealo está en posición única para actuar en los tres niveles donde eso importa: portafolio, corporativo, y su propia operación. Y esa última no es accesoria — es <strong>condición de credibilidad</strong> para las otras dos.
+    </div>
+  </div>
+
+  <!-- CONTEXTO MERCADO -->
+  <div class="section">
+    <div class="section-num">CONTEXTO · 01</div>
+    <h2 class="section-title">Lo que pasó en el mercado mientras armábamos el Fondo 2</h2>
+    <p class="section-sub">Tres datos que cambian cómo se va a valuar al portafolio en su próxima ronda.</p>
+
+    <div class="market-grid">
+      <div class="market-cell">
+        <div class="market-cell-num">48<em>%</em></div>
+        <div class="market-cell-label">del VC global 2025 fue a IA. En LATAM, AI/ML startups crecieron 4.2× YoY y ya son 14% de rondas.</div>
+        <div class="market-cell-source">CB Insights · LAVCA 2025</div>
+      </div>
+      <div class="market-cell">
+        <div class="market-cell-num">+19<em>%</em></div>
+        <div class="market-cell-label">premium de tamaño de ronda para startups AI-enabled vs. no-IA en Series A. Premium estructural, no coyuntural.</div>
+        <div class="market-cell-source">Carta · Aventis 2026</div>
+      </div>
+      <div class="market-cell">
+        <div class="market-cell-num">10–15<em>%</em></div>
+        <div class="market-cell-label">de las grandes empresas integraron AI en operaciones, aunque 85% la desplegaron. La brecha está en organización, no en herramientas.</div>
+        <div class="market-cell-source">Section AI · 2026</div>
+      </div>
+    </div>
+
+    <p>El reporte de Westwood Investment sobre 460 empresas del S&amp;P 500 lo formaliza: <strong>cuatro de los cinco moats clásicos</strong> — switching costs, network effects, intangibles, efficient scale — perdieron poder predictivo en entornos AI. El único que sigue protegiendo es ventaja física (infraestructura, regulación, datos propietarios). Eso reescribe directamente cómo se evalúa una fintech LATAM cuyo diferencial era "operamos mejor".</p>
+  </div>
+
+  <!-- FRENTE 1 -->
+  <div class="section">
+    <div class="section-num">FRENTE 01 · FOCO</div>
+    <h2 class="section-title">Fondo 2 — el portafolio está distribuido en tres posiciones, no en una</h2>
+    <p class="section-sub">Tratar al portafolio como bloque homogéneo es el primer error de diagnóstico.</p>
+
+    <div class="spectrum">
+      <div class="spectrum-axis"></div>
+      <div class="spectrum-cells">
+        <div class="spectrum-cell">
+          <span class="spectrum-cell-tag tag-resistance">Resistencia activa</span>
+          <div class="spectrum-cell-name" data-cc-id="cc-2" style="">Monokera</div>
+          <div class="spectrum-cell-desc" data-cc-id="cc-3" style="">Adopción percibida como riesgo. AI vista como apoyo para "codear más rápido" — no como palanca de modelo de negocio. Señal validada en conversa con su CEO (Fuente: MakeTeamWork).</div>
+        </div>
+        <div class="spectrum-cell">
+          <span class="spectrum-cell-tag tag-enabled">AI-enabled de producto</span>
+          <div class="spectrum-cell-name" data-cc-id="cc-4" style="">Jelou · Aviva</div>
+          <div class="spectrum-cell-desc">AI integrada en el producto (modelo de riesgos, capa conversacional). No hay rediseño organizacional — sigue siendo headcount tradicional con AI por encima.</div>
+        </div>
+        <div class="spectrum-cell">
+          <span class="spectrum-cell-tag tag-native">AI-native</span>
+          <div class="spectrum-cell-name">Akua</div>
+          <div class="spectrum-cell-desc">Agentes autónomos en el ciclo de pagos. -80% en costos operativos. Equipo mínimo construido con AI desde la base — no como add-on.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      "Si necesito que adoptes AI, pero para mover el resultado por la velocidad en la que te estás moviendo y porque mañana llega alguien AI-native que ya te ganó todo lo que habías construido — estamos en esa batalla."
+      <span class="callout-source">— Anahí, conversa con BCP, 17 abril</span>
+    </div>
+
+    <p style="margin-top: 24px;"><strong>Lo que esto implica para People &amp; Org del portafolio.</strong> Cada posición del espectro genera trade-offs distintos para los founders, y si Krealo no los nombra explícitamente, los founders los descubren en la próxima ronda — o peor, en el cierre de fondo:</p>
+
+    <div class="risk-list">
+      <div class="risk-row">
+        <div class="risk-label">Resistencia</div>
+        <div class="risk-content"><strong>Riesgo de moat erosion silencioso.</strong> El diferencial operacional que justificó la inversión inicial se commoditiza — y la organización no tiene la capacidad ni la cultura para reaccionar cuando el board lo nombre.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">AI-enabled</div>
+        <div class="risk-content"><strong>Trampa del feature.</strong> El producto tiene AI, pero la economía unitaria sigue atada a headcount tradicional. La valuación AI-enabled del próximo round exige también <em>revenue por empleado</em> AI-enabled. Hoy no lo tienen.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">AI-native</div>
+        <div class="risk-content"><strong>Oportunidad de aprendizaje no capturado.</strong> Akua es nuestra evidencia interna más fuerte de qué se puede hacer con People &amp; Org rediseñado. Hoy ese aprendizaje no se está sistematizando para el resto del portafolio ni para el grupo.</div>
+      </div>
+    </div>
+
+    <p>La acción no es "que todo el portafolio se vuelva Akua". Es <strong>nombrar la posición de cada uno con el founder</strong>, y construir intervenciones diferenciadas — diagnóstico, ambassador program, rediseño de roles — que correspondan al estadio en que están. Section lo llama "AI Manifesto por compañía". Yo lo veo más simple: ningún founder debería entrar al 2027 sin saber dónde está parado.</p>
+  </div>
+
+  <!-- FRENTE 2 -->
+  <div class="section">
+    <div class="section-num">FRENTE 02 · IMPACTO</div>
+    <h2 class="section-title">Corporativo — BCP necesita exactamente lo que el portafolio puede ofrecer</h2>
+    <p class="section-sub">La conversa con John y Valentin confirmó algo que cambia cómo posicionamos a Krealo frente al grupo.</p>
+
+    <p>Tres cosas validadas en la reunión del 17 de abril:</p>
+
+    <div class="risk-list">
+      <div class="risk-row">
+        <div class="risk-label">▸ 01</div>
+        <div class="risk-content"><strong>BCP tiene +10 iniciativas AI en paralelo</strong>, McKinsey recién entrando a ordenar. Velocidad a producción: ~6 semanas vs. 1 semana en organizaciones líderes. La fricción no es presupuesto — es legacy y proceso de revisión de riesgos.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">▸ 02</div>
+        <div class="risk-content"><strong>Miden adopción por uso, no por valor.</strong> Cualquier prompt cuenta. Lo reconocen ellos mismos como insuficiente — pero no tienen aún cómo cambiarlo sin frenar el momentum cultural.</div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-label">▸ 03</div>
+        <div class="risk-content"><strong>John quiere explorar iniciativas semilla de alto riesgo con startups externas — sin desarrollarlas internamente.</strong> Necesita un sandbox. Hoy no tiene cómo armarlo solo.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      "Tenemos que desarrollar cuál es la agenda de AI hacia tus clientes y hacia adentro. Y, en general, eso tiene que guiar todas las decisiones de inversión. Lo que ya está en mente hoy, podemos ayudar a impulsar — pero follow-ons y nuevas inversiones, la agenda AI tiene que ser el dealing point más importante."
+      <span class="callout-source">— Adolfo, conversa del 22 abril</span>
+    </div>
+
+    <p style="margin-top: 24px;"><strong>La intersección no es accidente.</strong> BCP necesita un sandbox externo. El portafolio necesita pilotos reales con un cliente enterprise y data propietaria. Krealo es el único actor en el grupo con mandato y red para conectar las dos puntas — sin pedir control, solo facilitando.</p>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-card-tag">Camino A · Inversión</div>
+        <div class="col-card-title">Tesis AI integrada al DD del Fondo 3</div>
+        <p>Score Supercompany como gate obligatorio. Cobertura del portafolio actual con intervención diferenciada por posición. AI exposure framework como capa nueva del DD.</p>
+      </div>
+      <div class="col-card">
+        <div class="col-card-tag">Camino B · Partnership</div>
+        <div class="col-card-title">Sandbox Krealo–BCP</div>
+        <p>Krealo como facilitador (no operador) entre iniciativas semilla de John y startups del portafolio. Caso piloto concreto en 90 días. Modelo replicable hacia otras unidades del grupo.</p>
+      </div>
+    </div>
+
+    <div style="margin: 20px 0; padding: 24px 24px; background: var(--paper-warm); border: 1px solid var(--line); border-left: 3px solid var(--ink-faint);">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px;">Camino C · Idea en voz alta — requiere validación</div>
+      <div style="font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; margin-bottom: 10px; letter-spacing: -0.01em;">Bootcamp con Section — Krealo como habilitador de conocimiento</div>
+      <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 10px;">Asociación con Section para diseñar un programa cohort dirigido a founders o equipos del portafolio — no como capacitación genérica de AI, sino anclado en un problema de negocio que les duela: eficiencia de marketing, velocidad de underwriting, costo de adquisición. 1–2 pilotos por trimestre. Krealo como el que convoca, contextualiza y conecta aprendizaje con resultado de negocio medible.</p>
+      <p style="font-size: 12.5px; color: var(--ink-faint); font-style: italic; line-height: 1.55;">Caveat: antes de proponerlo formalmente, necesito validar con 2–3 founders del portafolio que hay un dolor compartido donde este formato agrega valor real — y no es un evento cultural más. Sin esa señal, es hipótesis.</p>
+    </div>
+
+    <p data-cc-id="cc-5" style="">Los tres caminos son <strong>complementarios, no excluyentes</strong>. Pueden activarse en secuencia — partnership como prueba de tesis, inversión como consolidación. O en paralelo, si Primera Línea define que el momentum lo justifica.</p>
+  </div>
+
+  <!-- FRENTE 3 -->
+  <div class="section">
+    <div class="section-num">FRENTE 03 · PROVOCACIÓN</div>
+    <h2 class="section-title">Krealo — ¿qué pasa si nos aplicamos a nosotros mismos el estándar que le pedimos al portafolio?</h2>
+    <p class="section-sub">Esto no es propuesta. Es la pregunta que va a aparecer si los dos frentes anteriores avanzan.</p>
+
+    <p>El framework de carrera del equipo de IC Investment de Krealo — el que define cómo se progresa de IC0 a IC4 — fue diseñado cuando AI no era parte del trabajo. Hoy no aparece en ninguna de sus dimensiones: ni en Scope &amp; Impact, ni en Ways of Working, ni en Business Knowledge. La progresión está construida alrededor de excelencia técnica en deals, no transformación de cómo opera el equipo.</p>
+
+    <p>Eso no es un problema operativo. Es una <strong>tensión de credibilidad</strong>: si Krealo le va a pedir al portafolio que rediseñe roles, mida revenue por empleado, integre AI en su organización — y nosotros mismos no lo hacemos — el pitch no va a aterrizar. Los founders lo van a leer como teoría externa, no como aprendizaje compartido.</p>
+
+    <div class="supercompany">
+      <div class="supercompany-divider"></div>
+      <div class="supercompany-grid">
+        <div class="supercompany-side">
+          <h4>Hoy</h4>
+          <h3>Krealo como VC tradicional</h3>
+          <p>Sourcing manual, DD orientado a sector y métricas de negocio clásicas, equipo escala con headcount, AI como herramienta opcional, framework de carrera sin AI embebido.</p>
+        </div>
+        <div class="supercompany-side future">
+          <h4>Hacia dónde</h4>
+          <h3>Krealo como <em>supercompany</em> de inversión</h3>
+          <p>Sourcing AI-powered (barrer el mundo, no la región andina), DD con capa AI obligatoria, leverage por agente en cobertura y monitoreo, revenue/empleado como KPI cultural, AI embebida en cada nivel de progresión.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 28px;"><strong>Cómo se ve eso en la práctica</strong> — no en abstracto. El framework de carrera actual mide al IC4 por "liderar inversiones estratégicas" y "ser embajador de Krealo". El framework adaptado mediría también:</p>
+
+    <div class="dim-table">
+      <div class="dim-row header">
+        <div class="dim-cell">Dimensión</div>
+        <div class="dim-cell">Hoy</div>
+        <div class="dim-cell">Hacia donde</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-cell label">Scope &amp; Impact</div>
+        <div class="dim-cell before">Ejecuta y lidera deals</div>
+        <div class="dim-cell after">+ rediseña cómo el equipo hace el proceso, usando AI como leverage</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-cell label">Business Knowledge</div>
+        <div class="dim-cell before">Conoce tendencias del ecosistema</div>
+        <div class="dim-cell after">+ aplica AI exposure framework al DD y al monitoreo del portafolio</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-cell label">Ways of Working</div>
+        <div class="dim-cell before">Colaboración y comunicación efectiva</div>
+        <div class="dim-cell after">+ leverage demostrable por agente — "qué hago yo, qué hace mi agente"</div>
+      </div>
+      <div class="dim-row">
+        <div class="dim-cell label">Leadership</div>
+        <div class="dim-cell before">Mentoring y desarrollo de juniors</div>
+        <div class="dim-cell after">+ activa AI literacy en el equipo y en founders del portafolio</div>
+      </div>
+    </div>
+
+    <p>No es cambio inmediato. Es trabajo de 12–18 meses, paralelo al Fondo 3. Pero <strong>tiene que arrancar ahora</strong> para que cuando Fondo 3 esté operando, el equipo que lo opere ya esté pensando distinto. Si esperamos a tener Fondo 3 cerrado para empezar, llegamos al 2028 con el mismo problema que hoy le diagnosticamos al portafolio.</p>
+  </div>
+
+  <!-- CIERRE -->
+  <div class="section">
+    <div class="section-num">CIERRE · 04</div>
+    <h2 class="section-title">Lo que necesito de ti para llevar esto a Primera Línea</h2>
+    <p class="section-sub">No vengo a pedir aprobación de propuesta. Vengo a pedir tres definiciones para poder estructurar el hallazgo bien.</p>
+
+    <div class="asks">
+      <div class="ask">
+        <div class="ask-content">
+          <h4>¿Llega como hallazgo de inversión, oportunidad de partnership, o ambos?</h4>
+          <p>De tu respuesta depende qué interlocutor de Primera Línea es el primario. Si es solo inversión, va por una vía; si incluye partnership con BCP, abre una conversación distinta y más amplia.</p>
+        </div>
+      </div>
+      <div class="ask">
+        <div class="ask-content">
+          <h4>¿El frente de Krealo como supercompany lo nombramos en el documento, o lo dejamos para después?</h4>
+          <p>Mi instinto es que sí — porque si los dos primeros frentes avanzan, este es el siguiente. Pero entiendo si preferís separarlo para no diluir el foco del primer mensaje.</p>
+        </div>
+      </div>
+      <div class="ask">
+        <div class="ask-content">
+          <h4>¿Quién más tiene que ver esto antes de que suba?</h4>
+          <p>Álvaro ya pimponeó conmigo la versión hipótesis. ¿Lo cierro con él? ¿Lo ven Pablo, Eduardo, Pedro? Tu lectura de orden es más confiable que la mía.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 24px; font-family: 'Fraunces', serif; font-size: 17px; line-height: 1.55; font-style: italic; color: var(--ink);">Tú dijiste en la conversa: <strong style="font-style: normal; font-weight: 500;">"siento que estamos tarde y deberíamos estar temprano".</strong> Estoy de acuerdo. La ventana de 2026 todavía permite que Krealo se posicione como el que activa el rediseño. La de 2027 nos obliga a reaccionar a lo que otros ya hicieron.</p>
+
+    <!-- LINK A FRENTE 04 -->
+    <a href="krealo_frente_04.html" style="display: block; margin-top: 36px; padding: 24px 28px; background: var(--ink); color: var(--paper); text-decoration: none; border: 1px solid var(--ink); transition: background 0.15s;">
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;">
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-warm); opacity: 0.65; margin-bottom: 8px;">Frente 04 · Adentro — Anexo operativo</div>
+          <div style="font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; color: var(--paper); margin-bottom: 6px;">Los 90 días que convierten la tesis en práctica</div>
+          <div style="font-size: 13px; color: var(--paper-warm); opacity: 0.8; line-height: 1.5;">Plan de alineamiento + activación, opciones por fase, checklist para Adolfo. Lectura 6 min.</div>
+        </div>
+        <div style="font-family: 'Fraunces', serif; font-size: 36px; color: var(--accent-soft); line-height: 1;">→</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>Krealo · People &amp; Org</div>
+    <div>Borrador v1 · No distribuir</div>
+  </div>
+
+</div>
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

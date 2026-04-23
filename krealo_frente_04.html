@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Krealo · Frente 04 · Adentro</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-faint: #8a8a8a;
+    --paper: #fafaf7;
+    --paper-warm: #f3f0e8;
+    --line: #e0ddd5;
+    --line-soft: #ecebe5;
+    --accent: #c2410c;
+    --accent-soft: #fed7aa;
+    --teal: #0f6e56;
+    --teal-soft: #d1f0e3;
+    --amber: #92400e;
+    --amber-soft: #fde68a;
+    --red: #991b1b;
+    --red-soft: #fecaca;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 60px 56px 80px;
+  }
+
+  /* BACK LINK */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* HEADER */
+  .header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: end;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 48px;
+  }
+  .header-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .header-mark strong { color: var(--ink); font-weight: 500; }
+  .header-title {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .header-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .header-meta {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* LENTE / INTRO BOX */
+  .intro-box {
+    margin-bottom: 48px;
+    padding: 22px 28px;
+    background: var(--paper-warm);
+    border-left: 3px solid var(--accent);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .intro-box-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  /* TIMELINE — the 90 day map */
+  .timeline {
+    margin: 32px 0 48px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .timeline-track {
+    position: relative;
+    height: 36px;
+    background: linear-gradient(to right, var(--paper-warm) 0%, var(--paper-warm) 33.33%, var(--accent-soft) 33.33%, var(--accent-soft) 100%);
+    border-bottom: 1px solid var(--line);
+  }
+  .timeline-mark {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--ink);
+  }
+  .timeline-mark-label {
+    position: absolute;
+    top: 9px;
+    left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .timeline-phases {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+  .timeline-phase {
+    padding: 20px 22px;
+    border-right: 1px solid var(--line);
+  }
+  .timeline-phase:last-child { border-right: none; }
+  .timeline-phase-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .timeline-phase-title {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .timeline-phase-desc {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* OUTPUT CHIPS — three verifiable outputs */
+  .outputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 24px 0 40px;
+  }
+  .output {
+    background: var(--paper);
+    padding: 18px 18px;
+  }
+  .output-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .output-label {
+    font-size: 12.5px;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .output-label strong { font-weight: 500; }
+
+  /* PHASE BLOCK */
+  .phase {
+    margin-bottom: 72px;
+  }
+  .phase-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: baseline;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 28px;
+  }
+  .phase-stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    align-self: center;
+  }
+  .phase-title {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .phase-sub {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 6px;
+  }
+  .phase p { margin-bottom: 14px; }
+  .phase p strong { font-weight: 500; }
+
+  /* SECTION LABEL inside phase */
+  .sub-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 28px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sub-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* DATA ROW — three stats horizontal */
+  .data-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 20px 0;
+  }
+  .data-cell {
+    background: var(--paper);
+    padding: 20px 20px;
+  }
+  .data-cell-num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .data-cell-num em {
+    font-size: 16px;
+    font-style: normal;
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin-left: 2px;
+  }
+  .data-cell-label {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .data-cell-source {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* CALLOUT */
+  .callout {
+    margin: 24px 0;
+    padding: 20px 24px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  .callout em { color: var(--accent); font-style: italic; }
+  .callout-source {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11.5px;
+    font-style: normal;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* GALLUP MULTIPLIER BARS — visual instead of table */
+  .mult-list {
+    margin: 20px 0;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .mult-row {
+    display: grid;
+    grid-template-columns: 230px 1fr 90px;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .mult-row:last-child { border-bottom: none; }
+  .mult-label {
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .mult-bar-wrap {
+    height: 8px;
+    background: var(--paper-warm);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mult-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .mult-val {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+    text-align: right;
+  }
+  .mult-val em {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-left: 2px;
+  }
+
+  /* OPTIONS GRID — three cards side by side */
+  .options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .option {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .option.recommended {
+    background: var(--paper-warm);
+    border-color: var(--accent);
+  }
+  .option-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .option-letter {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .option.recommended .option-letter {
+    color: var(--accent);
+  }
+  .option-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 7px;
+    border-radius: 2px;
+  }
+  .option-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    min-height: 42px;
+  }
+  .option-body {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .option-meta {
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+  .option-meta-line {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .option-meta-line:last-child { margin-bottom: 0; }
+  .option-meta-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 2px;
+  }
+  .option-meta-tag.pro { color: var(--teal); }
+  .option-meta-tag.con { color: var(--red); }
+  .option-meta-text { color: var(--ink-soft); }
+
+  /* READING / RECOMMENDATION */
+  .reading {
+    margin: 32px 0 16px;
+    padding: 22px 26px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .reading-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .reading-text {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--paper);
+  }
+  .reading-text strong {
+    font-weight: 500;
+    color: var(--accent-soft);
+  }
+  .reading-close {
+    margin-top: 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--paper-warm);
+    opacity: 0.8;
+    font-style: italic;
+  }
+
+  /* MEASUREMENT — milestones as timeline rows */
+  .milestones {
+    margin: 20px 0;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .milestone {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .milestone:last-child { border-bottom: none; }
+  .milestone-when {
+    padding: 18px 20px;
+    background: var(--paper-warm);
+    border-right: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+  .milestone-body {
+    padding: 18px 22px;
+  }
+  .milestone-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .milestone-signal {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* QUESTIONS — two columns + dark */
+  .qs-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .q-card {
+    padding: 22px 22px;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+  }
+  .q-card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .q-card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .q-card p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .q-main {
+    margin: 20px 0 0;
+    padding: 26px 28px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .q-main-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .q-main-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--paper);
+    margin-bottom: 10px;
+  }
+  .q-main-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--paper-warm);
+    opacity: 0.85;
+  }
+
+  /* CHECKLIST */
+  .checklist {
+    margin: 28px 0;
+    counter-reset: chk;
+  }
+  .chk {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 20px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .chk:last-child { border-bottom: 1px solid var(--line); }
+  .chk::before {
+    counter-increment: chk;
+    content: counter(chk, decimal-leading-zero);
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .chk-content h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .chk-content p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* SECTION (outer) */
+  .section { margin-bottom: 56px; }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .section p { margin-bottom: 14px; }
+  .section p strong { font-weight: 500; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .footer a { color: var(--ink-faint); text-decoration: none; }
+  .footer a:hover { color: var(--accent); }
+
+  @media print {
+    body { background: white; }
+    .page { padding: 24px 32px; max-width: none; }
+    .phase, .section { page-break-inside: avoid; }
+    .reading, .q-main { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 800px) {
+    .page { padding: 32px 24px; }
+    .header { grid-template-columns: 1fr; gap: 12px; }
+    .header-title { font-size: 28px; }
+    .timeline-phases { grid-template-columns: 1fr; }
+    .timeline-phase { border-right: none; border-bottom: 1px solid var(--line); }
+    .outputs, .data-row { grid-template-columns: 1fr; }
+    .options { grid-template-columns: 1fr; }
+    .mult-row { grid-template-columns: 1fr; gap: 8px; }
+    .milestone { grid-template-columns: 1fr; }
+    .milestone-when { border-right: none; border-bottom: 1px solid var(--line); }
+    .qs-two { grid-template-columns: 1fr; }
+    .phase-head { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back-link" href="krealo_ai_thesis_v3.html">← Volver al documento principal</a>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-mark">
+      <strong>Anexo</strong> Frente 04<br>
+      <strong>Para</strong> Adolfo Vinatea<br>
+      <strong>De</strong> Anahí Lavado<br>
+      <strong>Lectura</strong> 6 min
+    </div>
+    <div>
+      <h1 class="header-title">Los 90 días que convierten la <em>tesis en práctica</em>.</h1>
+      <div class="header-meta">Anexo operativo al Frente 03 — mapa de decisiones, no plan ejecutado</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-box">
+    <div class="intro-box-label">▸ De dónde viene esto</div>
+    Siguiendo el hilo del Frente 03: si Krealo va a pedirle al portafolio que se aplique un estándar AI, necesitamos poder mostrarlo primero adentro. No como condición moral — como <strong>condición de credibilidad</strong>. Lo que sigue no es el plan ejecutado. Es el mapa de decisiones que necesitamos tomar juntos — y que, en mi lectura, deberían estar resueltas antes de que esto llegue a Primera Línea el lunes.
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section">
+    <div class="section-num">VISTA · 90 DÍAS</div>
+    <h2 class="section-title">La lógica del plan en una imagen</h2>
+    <p class="section-sub">Primeros 30 días: alineamiento estratégico. Siguientes 60: activación. Al cierre: tres outputs verificables.</p>
+
+    <div class="timeline">
+      <div class="timeline-track">
+        <div class="timeline-mark" style="left: 0%;">
+          <div class="timeline-mark-label">Día 0</div>
+        </div>
+        <div class="timeline-mark" style="left: 33.33%;">
+          <div class="timeline-mark-label">Día 30</div>
+        </div>
+        <div class="timeline-mark" style="left: 99.7%;">
+          <div class="timeline-mark-label" style="left: auto; right: 8px;">Día 90</div>
+        </div>
+      </div>
+      <div class="timeline-phases">
+        <div class="timeline-phase">
+          <div class="timeline-phase-tag">Fase 1 · 30 días</div>
+          <div class="timeline-phase-title">Alineamiento estratégico</div>
+          <div class="timeline-phase-desc">Posición explícita de Krealo sobre AI. Manifesto, ambición, principios, responsable.</div>
+        </div>
+        <div class="timeline-phase">
+          <div class="timeline-phase-tag">Fase 2 · 60 días</div>
+          <div class="timeline-phase-title">Activación</div>
+          <div class="timeline-phase-desc">Líderes visibles. Equipo en plataforma designada. Flujos rediseñados. Baseline con KPIs.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-label">Tres outputs verificables al cierre</div>
+    <div class="outputs">
+      <div class="output">
+        <div class="output-num">01</div>
+        <div class="output-label"><strong>AI Manifesto</strong> que refleje lo que Krealo decidió — no importado.</div>
+      </div>
+      <div class="output">
+        <div class="output-num">02</div>
+        <div class="output-label"><strong>Stack definido</strong> — herramientas y enfoque de agentes, con criterios claros de qué entra y qué no.</div>
+      </div>
+      <div class="output">
+        <div class="output-num">03</div>
+        <div class="output-label"><strong>Alineamiento real</strong> — desde Adolfo hasta los analistas, no solo declarativo.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASE 1 -->
+  <div class="phase">
+    <div class="phase-head">
+      <span class="phase-stamp">Fase 1 · 0 – 30 días</span>
+      <h2 class="phase-title">Alineamiento estratégico</h2>
+      <div class="phase-sub">Antes de mover al equipo, resolver la conversación que Krealo todavía no ha tenido.</div>
+    </div>
+
+    <div class="sub-label">Situación</div>
+
+    <p>Hoy Krealo no tiene una posición explícita sobre AI como organización. Cada persona del equipo está tomando sus propias decisiones sobre qué herramientas usar, para qué y con qué límites. Eso no es un problema tecnológico — es una señal de que la organización no ha tenido la conversación que le corresponde tener.</p>
+
+    <div class="data-row">
+      <div class="data-cell">
+        <div class="data-cell-num">70<em>%</em></div>
+        <div class="data-cell-label">de los trabajadores usa AI gratuita o personal en lugar de la provista por la organización. Casi la mitad admite usos potencialmente inapropiados.</div>
+        <div class="data-cell-source">Infosys · 2026</div>
+      </div>
+      <div class="data-cell">
+        <div class="data-cell-num">+18<em>pp</em></div>
+        <div class="data-cell-label">de mejora en tasas de éxito AI cuando los equipos se preparan con políticas claras. Costo medible de no tener posición explícita.</div>
+        <div class="data-cell-source">Infosys · 2026</div>
+      </div>
+      <div class="data-cell">
+        <div class="data-cell-num">15<em>%</em></div>
+        <div class="data-cell-label">genera valor real con AI. El 70% queda en "experimentador" — tareas de bajo valor como búsquedas o resúmenes.</div>
+        <div class="data-cell-source">Section · 5,000 evaluados</div>
+      </div>
+    </div>
+
+    <p>Sin un LLM designado y casos de uso por rol, un equipo de 15 senior estadísticamente va a tener <strong>solo 2 o 3 personas generando valor real</strong> — independientemente de cuánto acceso tengan a las herramientas.</p>
+
+    <p>La pregunta importante antes de avanzar: ¿sabemos realmente cómo está usando AI cada persona del equipo hoy — no lo que declaran, sino lo que hacen? La brecha entre lo reportado y lo real es material. El <strong>25% admite exagerar</strong> sus capacidades, mientras el <strong>30% minimiza</strong> cuánto la usa. En servicios profesionales — donde el criterio experto es identidad — esa presión es más fuerte, no menor.</p>
+
+    <div class="callout">
+      "En algo concreto de tu trabajo esta semana, ¿AI cambió <em>el resultado</em> — o cambió el proceso pero el resultado hubiera sido el mismo?" El objetivo no es juzgar. Es que el equipo tenga el vocabulario para distinguir entre <em>usar</em> AI y <em>trabajar con</em> AI.
+      <span class="callout-source">— Pregunta propuesta para el townhall del lunes</span>
+    </div>
+
+    <p style="margin-top: 24px;">Output único de esta fase: <strong>alineamiento radical</strong> — desde Adolfo hasta los analistas — sobre ambición, velocidad, principios y responsables. Sin eso, cualquier iniciativa que venga después va a ser fragmentada y sin poder medirse.</p>
+
+    <div class="sub-label">Opciones para resolverlo</div>
+
+    <div class="options">
+      <div class="option recommended">
+        <div class="option-head">
+          <div class="option-letter">A</div>
+          <div class="option-pill">Preferida</div>
+        </div>
+        <div class="option-title">Alineamiento co-construido con el equipo</div>
+        <div class="option-body">Anahí facilita conversaciones estructuradas — con Adolfo, luego Primera Línea, luego equipo completo — para construir el AI Manifesto desde adentro. Tres partes: por qué anclado en Krealo, ambición explícita, principios operativos.</div>
+        <div class="option-meta">
+          <div class="option-meta-line"><span class="option-meta-tag pro">Ventaja</span><span class="option-meta-text">Genuinamente de Krealo. Defendible en un KIC.</span></div>
+          <div class="option-meta-line"><span class="option-meta-tag con">Costo</span><span class="option-meta-text">Tiempo de facilitación real. Primera Línea dispuesta a la conversación de fondo.</span></div>
+        </div>
+      </div>
+      <div class="option">
+        <div class="option-head">
+          <div class="option-letter">B</div>
+        </div>
+        <div class="option-title">Alineamiento acelerado con marco externo</div>
+        <div class="option-body">Usar el marco de Section como punto de partida — estructura de manifesto, diagnóstico de proficiency, framework de herramientas — y adaptarlo a Krealo.</div>
+        <div class="option-meta">
+          <div class="option-meta-line"><span class="option-meta-tag pro">Ventaja</span><span class="option-meta-text">Más rápido. Referencias de qué funciona.</span></div>
+          <div class="option-meta-line"><span class="option-meta-tag con">Costo</span><span class="option-meta-text">Por cotizar. No en presupuesto. Riesgo de sentirse como metodología externa.</span></div>
+        </div>
+      </div>
+      <div class="option">
+        <div class="option-head">
+          <div class="option-letter">C</div>
+        </div>
+        <div class="option-title">Solo el townhall como primer movimiento</div>
+        <div class="option-body">Hacer la pregunta el lunes, tomar nota, y ver qué emerge antes de estructurar algo más formal.</div>
+        <div class="option-meta">
+          <div class="option-meta-line"><span class="option-meta-tag pro">Ventaja</span><span class="option-meta-text">Sin fricción, sin costo, sin compromiso.</span></div>
+          <div class="option-meta-line"><span class="option-meta-tag con">Riesgo</span><span class="option-meta-text">Sin estructura, el momentum se pierde en dos semanas.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reading">
+      <div class="reading-label">▸ Mi lectura</div>
+      <div class="reading-text"><strong>Opción A con el townhall como arranque.</strong> No porque sea la más rápida, sino porque el manifesto que necesita Krealo tiene que poder defenderse en un KIC con un founder — y para eso tiene que ser genuinamente nuestro. De Section tomaría el marco de referencia para las conversaciones, no el output en sí.</div>
+      <div class="reading-close">Al cierre de esta fase deberíamos poder responder: ¿para qué usamos AI en Krealo — mismo trabajo más rápido, o cosas nuevas? ¿Cuál es el LLM principal y por qué? ¿Qué puede y qué no puede entrar en esas herramientas? ¿Quién es el responsable de AI en Krealo — adentro y frente al grupo?</div>
+    </div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="phase">
+    <div class="phase-head">
+      <span class="phase-stamp">Fase 2 · 30 – 90 días</span>
+      <h2 class="phase-title">Activación</h2>
+      <div class="phase-sub">Antes de lanzar al equipo, activar a los líderes. El dato es claro: es la variable que más importa.</div>
+    </div>
+
+    <div class="sub-label">Situación</div>
+
+    <p>El error más documentado en transformaciones AI es lanzar al equipo sin activar primero a los líderes. Los datos de Gallup sobre +19,000 trabajadores lo cuantifican con precisión.</p>
+
+    <div class="mult-list">
+      <div class="mult-row">
+        <div class="mult-label">Uso regular de AI</div>
+        <div class="mult-bar-wrap"><div class="mult-bar" style="width: 24%;"></div></div>
+        <div class="mult-val">2.1<em>×</em></div>
+      </div>
+      <div class="mult-row">
+        <div class="mult-label">Encontrarla genuinamente útil</div>
+        <div class="mult-bar-wrap"><div class="mult-bar" style="width: 74%;"></div></div>
+        <div class="mult-val">6.5<em>×</em></div>
+      </div>
+      <div class="mult-row">
+        <div class="mult-label">Sentir que abre oportunidades</div>
+        <div class="mult-bar-wrap"><div class="mult-bar" style="width: 100%;"></div></div>
+        <div class="mult-val">8.8<em>×</em></div>
+      </div>
+    </div>
+    <p style="font-size: 12px; color: var(--ink-faint); margin-top: -8px; margin-bottom: 20px;">Probabilidad comparada: equipos con manager que apoya activamente AI vs. equipo promedio. Fuente: Gallup.</p>
+
+    <p>No es diferencia marginal — es la variable que más importa. Y el problema no es de intención, es de <strong>visibilidad</strong>: el 87% de los ejecutivos usa AI en su trabajo, pero solo el 57% de los managers lo hace. Una brecha de 30 puntos que los equipos leen como señal de ambivalencia.</p>
+
+    <div class="callout">
+      En finanzas: firmas que desplegaron AI con change management lograron <em>78% de adopción y ROI de 4.2×</em> al año 12. Las que no: <em>23% de adopción y 0.8× de ROI</em>. La misma tecnología. Resultados completamente distintos.
+      <span class="callout-source">— Benchmarks de activación en servicios financieros</span>
+    </div>
+
+    <p style="margin-top: 24px;">En un equipo del tamaño de Krealo, donde los Principals, Heads y el Asociado Senior son modelos visibles para todos, ese efecto se amplifica. Si los líderes no usan AI de forma visible en su propio trabajo, el equipo va a leer el silencio como señal de que no es realmente urgente.</p>
+
+    <div class="sub-label">Tres outputs al cierre · 1 enero 2027</div>
+    <div class="outputs">
+      <div class="output">
+        <div class="output-num">90%</div>
+        <div class="output-label"><strong>del equipo activado</strong> en la plataforma designada.</div>
+      </div>
+      <div class="output">
+        <div class="output-num">90%</div>
+        <div class="output-label"><strong>de líderes usando AI</strong> de forma visible en su propio trabajo.</div>
+      </div>
+      <div class="output">
+        <div class="output-num">01</div>
+        <div class="output-label"><strong>Baseline documentado</strong> con KPIs acordados para los próximos 12 meses.</div>
+      </div>
+    </div>
+
+    <div class="sub-label">Opciones para activar</div>
+
+    <div class="options">
+      <div class="option recommended">
+        <div class="option-head">
+          <div class="option-letter">A</div>
+          <div class="option-pill">Preferida</div>
+        </div>
+        <div class="option-title">Activación interna co-liderada</div>
+        <div class="option-body">Anahí opera la capacidad organizacional. Un líder de inversión — Asociado Senior con más apertura o Principal con más influencia — co-lidera el cambio en flujos reales: sourcing, DD, portfolio monitoring.</div>
+        <div class="option-meta">
+          <div class="option-meta-line"><span class="option-meta-tag pro">Ventaja</span><span class="option-meta-text">Adaptable al ritmo de Krealo. No depende de plataforma externa.</span></div>
+          <div class="option-meta-line"><span class="option-meta-tag con">Costo</span><span class="option-meta-text">Capacidad sostenida de Anahí. Mandato claro al co-líder.</span></div>
+        </div>
+      </div>
+      <div class="option">
+        <div class="option-head">
+          <div class="option-letter">B</div>
+        </div>
+        <div class="option-title">Section como infraestructura</div>
+        <div class="option-body">Módulo de activación de managers, coaching por rol con +250 casos de uso, y Section HQ — command center para monitorear uso y profundidad sin seguimiento manual.</div>
+        <div class="option-meta">
+          <div class="option-meta-line"><span class="option-meta-tag pro">Ventaja</span><span class="option-meta-text">Anahí opera esto sin que sea su único foco. Monitoreo automatizado.</span></div>
+          <div class="option-meta-line"><span class="option-meta-tag con">Costo</span><span class="option-meta-text">Por cotizar. No en presupuesto definido.</span></div>
+        </div>
+      </div>
+      <div class="option">
+        <div class="option-head">
+          <div class="option-letter">C</div>
+        </div>
+        <div class="option-title">Activación directa por flujo</div>
+        <div class="option-body">Identificar 2–3 workflows de mayor retorno — sourcing, memo, portfolio update — y rediseñarlos con AI directamente con quienes los operan.</div>
+        <div class="option-meta">
+          <div class="option-meta-line"><span class="option-meta-tag pro">Ventaja</span><span class="option-meta-text">Velocidad y foco inmediato.</span></div>
+          <div class="option-meta-line"><span class="option-meta-tag con">Riesgo</span><span class="option-meta-text">Sin baseline ni governance. No sabemos si escalaron ni cómo medir.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reading">
+      <div class="reading-label">▸ Mi lectura</div>
+      <div class="reading-text"><strong>Opción A con elementos de B.</strong> La parte de liderazgo y flujos la operamos nosotros — nadie conoce al equipo mejor que Krealo. Pero si queremos medir algo real al 1 de enero de 2027, necesitamos infraestructura de monitoreo que no dependa de que Anahí esté en todas partes. Si la cotización de Section tiene sentido para el presupuesto, resuelve ese problema. Si no, A sola es viable — pero requiere acuerdo explícito sobre tiempo de Anahí y mandato del co-líder.</div>
+      <div class="reading-close">Al cierre: tres ejemplos concretos de trabajo que cambió porque AI entró en el flujo real — un memo que tardó menos, una pregunta en un KIC que no hubiéramos hecho sin AI, un mapeo de industria que generó una tesis nueva. Y los KPIs acordados con Primera Línea para los 12 meses siguientes.</div>
+    </div>
+  </div>
+
+  <!-- MEDIR -->
+  <div class="section">
+    <div class="section-num">MEDICIÓN</div>
+    <h2 class="section-title">Qué medir para saber si algo está funcionando</h2>
+    <p class="section-sub">Acceso a herramientas, uso regular, y cambio real en el flujo son tres hitos distintos separados por tiempo.</p>
+
+    <div class="milestones">
+      <div class="milestone">
+        <div class="milestone-when">Sem. 2 – 4</div>
+        <div class="milestone-body">
+          <div class="milestone-title">Primeras victorias individuales</div>
+          <div class="milestone-signal">Casos de uso aislados por persona — AI entra al día a día de alguien del equipo.</div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Sem. 4 – 8</div>
+        <div class="milestone-body">
+          <div class="milestone-title">Uso activo en &gt;50% del equipo</div>
+          <div class="milestone-signal">Plataforma designada usada semanalmente. Ya no es experimento individual.</div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Sem. 6 – 12</div>
+        <div class="milestone-body">
+          <div class="milestone-title">Primer rediseño real de flujo</div>
+          <div class="milestone-signal">Un workflow operado distinto — no solo asistido. Cambia cómo se hace, no solo cuánto tarda.</div>
+        </div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-when">Mes 4 – 6</div>
+        <div class="milestone-body">
+          <div class="milestone-title">ROI cuantificable</div>
+          <div class="milestone-signal">Tiempo, calidad o alcance medibles contra baseline. Primera cifra que se puede defender.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>Solo el <strong>18% de las firmas de servicios profesionales</strong> mide hoy el ROI de sus herramientas AI — la mayoría no sabe si algo cambió. Krealo puede hacerlo mejor desde el inicio si define las métricas ahora.</p>
+
+    <div class="sub-label">Tres preguntas útiles para Krealo</div>
+
+    <div class="qs-two">
+      <div class="q-card">
+        <div class="q-card-tag">Pregunta · Throughput</div>
+        <div class="q-card-title">¿Está cambiando el tiempo del ciclo de un memo de inversión?</div>
+        <p>Métrica dura. Si el memo se escribe más rápido, con menos personas, o con mejor profundidad — es la primera señal de que el flujo realmente se rediseñó.</p>
+      </div>
+      <div class="q-card">
+        <div class="q-card-tag">Pregunta · Criterio</div>
+        <div class="q-card-title">¿Llegan los analistas a las calls con founders con preguntas diferentes?</div>
+        <p>Métrica cualitativa. Si la preparación cambia — si las hipótesis son más agudas antes de hablar con un founder — AI ya entró al proceso, no solo al output.</p>
+      </div>
+    </div>
+
+    <div class="q-main">
+      <div class="q-main-tag">Pregunta · La más importante</div>
+      <div class="q-main-title">¿Están los líderes compartiendo voluntariamente casos de uso propios — sin que nadie se los pida?</div>
+      <div class="q-main-text">Cuando los seniors empiezan a compartir sin que se los pidan, la transformación ya no depende de Anahí. Ese es el umbral que nos dice que el sistema es auto-sostenible.</div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST ADOLFO -->
+  <div class="section">
+    <div class="section-num">DECISIONES · CEO</div>
+    <h2 class="section-title">Checklist para Adolfo</h2>
+    <p class="section-sub">No es una lista de tareas para Anahí. Son las preguntas que solo el CEO puede responder — y que Primera Línea va a necesitar resueltas para avanzar con claridad.</p>
+
+    <div class="checklist">
+      <div class="chk">
+        <div class="chk-content">
+          <h4>Sobre ambición — ¿mismo trabajo más rápido, cosas nuevas, o ambas?</h4>
+          <p>Decir "ambas" sin ser explícito en qué proporción es lo mismo que no decidir. La respuesta cambia el plan completo — qué herramientas compramos, a quién activamos primero, qué medimos en enero.</p>
+        </div>
+      </div>
+      <div class="chk">
+        <div class="chk-content">
+          <h4>Sobre el responsable de AI en Krealo</h4>
+          <p>Alguien tiene que poder decir "esto va" o "esto no va" sobre herramientas, tiempo del equipo y qué se mide — y representar esa agenda frente al grupo en el Comité de AI con Rafael Lemor. Hoy ese rol no está formalmente asignado. Quien lo ocupe necesita tres cosas: visibilidad sobre la operación interna, credibilidad para hablar de AI con el grupo, y mandato explícito. ¿Quién en Krealo reúne esas tres condiciones hoy?</p>
+        </div>
+      </div>
+      <div class="chk">
+        <div class="chk-content">
+          <h4>Sobre el co-líder de inversión</h4>
+          <p>¿Quién del equipo puede co-liderar el cambio en los flujos reales — con mandato explícito, no como voluntario? Un Asociado Senior puede tener más apertura al cambio; un Principal tiene más poder de influencia. ¿Cuál de los dos necesita más este plan para funcionar?</p>
+        </div>
+      </div>
+      <div class="chk">
+        <div class="chk-content">
+          <h4>Sobre visibilidad propia</h4>
+          <p>Gallup muestra 2.1× más adopción en equipos donde los líderes modelan activamente el uso de AI. ¿Está Adolfo dispuesto a ser el primer ejemplo visible — a compartir en Primera Línea un caso concreto de cómo está usando AI en su propio trabajo, antes de pedirle eso al equipo?</p>
+        </div>
+      </div>
+      <div class="chk">
+        <div class="chk-content">
+          <h4>Sobre el lunes</h4>
+          <p>¿Qué queremos que el equipo sienta al salir del townhall — que se anunció algo, o que se empezó algo? Si es lo segundo, la propuesta es hacer una pregunta honesta — anónima, sin respuesta correcta — que genere el primer dato real sobre dónde está parado el equipo. Y que el hecho de que Adolfo la haga en voz alta ya sea la señal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>Krealo · People &amp; Org · Frente 04</div>
+    <div><a href="krealo_ai_thesis_v3.html">← Documento principal</a></div>
+  </div>
+
+</div>
+</body>
+</html>
